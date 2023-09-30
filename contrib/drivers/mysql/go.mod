@@ -8,7 +8,7 @@ require (
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.4
     
-    github.com/gzdzh/dzhgo/dzhCore v0.0.6
+    github.com/gzdzh/dzhgo/dzhCore v0.0.7
 )
 
 require (

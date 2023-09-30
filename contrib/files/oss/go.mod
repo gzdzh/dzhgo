@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.9+incompatible
 	github.com/gogf/gf/v2 v2.5.4
-	github.com/gzdzh/dzhgo/dzhCore v0.0.6
+	github.com/gzdzh/dzhgo/dzhCore v0.0.7
 )
 
 require (

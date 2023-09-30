@@ -5,11 +5,11 @@ go 1.20
 require (
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.4
 	github.com/gogf/gf/v2 v2.5.4
-	github.com/gzdzh/dzhgo/contrib/drivers/mysql v0.0.6
-	github.com/gzdzh/dzhgo/contrib/files/local v0.0.6
-	github.com/gzdzh/dzhgo/contrib/files/oss v0.0.6
-	github.com/gzdzh/dzhgo/dzhCore v0.0.6
-	github.com/gzdzh/dzhgo/modules/base v0.0.6
+	github.com/gzdzh/dzhgo/contrib/drivers/mysql v0.0.7
+	github.com/gzdzh/dzhgo/contrib/files/local v0.0.7
+	github.com/gzdzh/dzhgo/contrib/files/oss v0.0.7
+	github.com/gzdzh/dzhgo/dzhCore v0.0.7
+	github.com/gzdzh/dzhgo/modules/base v0.0.7
 )
 
 require (
