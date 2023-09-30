@@ -1,0 +1,72 @@
+dzhcms:
+  version: v0.2.1
+
+server:
+  address:     ":8200"
+  openapiPath: "/api.json"
+  swaggerPath: "/swagger"
+  serverRoot: "resource/public"
+  clientMaxBodySize: 104857600  # 100MB in bytes 100*1024*1024
+  paths: ["template", "/var/www/template"]
+  defaultFile: "index.html"
+  delimiters: ["{{", "}}"]
+
+logger:
+  path: "./data/logs/"
+  file: "{Y-m-d}.log"
+  level : "all"
+  stdout: true
+
+database:
+  logger:
+    path: "./data/logs/sql"
+    level: "all"
+    stdout: true
+    # ctxKeys: [ "RequestId" ]
+  default:
+    type: "mysql"
+    host: "127.0.0.1"
+    port: "3306"
+    user: "root"
+    pass: "dzh123456"
+    name: "dzhgo_go"
+    charset: "utf8mb4"
+    timezone: "Asia/Shanghai"
+    createdAt: "createTime"
+    updatedAt: "updateTime"
+    deletedAt: "deleteTime" 
+    debug: true #开启调试模式,启用后将在控制台打印相关sql语句
+
+# Redis 配置示例
+redis:
+  core:
+    address: "127.0.0.1:6379"
+    db: 0
+    
+core:
+  autoMigrate: true
+  eps: true
+  file:
+    mode: "local"
+    domain: "/dzh"
+
+modules:
+  base:
+    jwt:
+      sso: false
+      secret: "dzhcms"
+      token:
+        expire: 604800 # 24 * 3600 * 7
+        refreshExpire: 1296000 # 24*3600*15
+    middleware:
+      authority:
+        enable: 1
+      log:
+        enable: 0
+
+
+
+# 客户端请求代理
+http:
+  proxy_open: false  # 代理开关
+  proxy_url: http://dzh3116vpn.dzhcms.com  # 代理地址

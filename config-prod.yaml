@@ -1,0 +1,70 @@
+server:
+  address:     ":8200"
+  openapiPath: "/api.json"
+  swaggerPath: "/swagger"
+  serverRoot: "resource/public"
+  clientMaxBodySize: 104857600  # 100MB in bytes 100*1024*1024
+
+logger:
+  path: "./logs/"
+  file: "{Y-m-d}.log"
+  level : "all"
+  stdout: true
+
+
+database:
+  logger:
+    path: "logs/sql"
+    level: "all"
+    stdout: true
+    # ctxKeys: [ "RequestId" ]
+  default:
+    type: "mysql"
+    host: "127.0.0.1"
+    port: "3306"
+    user: "dzhcms_go"
+    pass: "XcMhReajkZ5k7bBp"
+    name: "dzhcms_go"
+    charset: "utf8mb4"
+    timezone: "Asia/Shanghai"
+    debug: false #开启调试模式,启用后将在控制台打印相关sql语句
+    createdAt: "createTime"
+    updatedAt: "updateTime"
+    deletedAt: "deleteTime"    
+  # default:
+  #   type: "sqlite" # 数据库类型
+  #   name: "./data/dzhCore.sqlite" # 数据库名称,对于sqlite来说就是数据库文件名
+  #   extra: busy_timeout=5000 # 扩展参数 如 busy_timeout=5000&journal_mode=ALL
+  #   createdAt: "createTime" # 创建时间字段名称
+  #   updatedAt: "updateTime" # 更新时间字段名称
+  #   debug: true # 开启调试模式,启用后将在控制台打印相关sql语句
+
+# Redis 配置示例
+redis:
+  core:
+    address: "127.0.0.1:6379"
+    db: 0
+
+core:
+  autoMigrate: true
+  eps: true
+  file:
+    mode: "local"
+    domain: "/dzh"
+
+modules:
+  base:
+    jwt:
+      sso: false
+      secret: "dzhcms"
+      token:
+        expire: 72000 # 2*3600
+        refreshExpire: 1296000 # 24*3600*15
+    middleware:
+      authority:
+        enable: 1
+      log:
+        enable: 1
+
+dzhcms:
+  version: v0.1
