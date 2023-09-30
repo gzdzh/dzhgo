@@ -1,12 +1,8 @@
-module github.com/gzdzh/dzhgo/modules/base
+module github.com/gzdzh/dzhgo/modules/space
 
 go 1.20
 
-require (
-	github.com/gogf/gf/v2 v2.5.4
-	github.com/golang-jwt/jwt/v4 v4.5.0
-	github.com/gzdzh/dzhgo/dzhCore v0.0.8
-)
+require github.com/gzdzh/dzhgo/dzhCore v0.0.8
 
 require (
 	github.com/BurntSushi/toml v1.2.0 // indirect
@@ -17,6 +13,8 @@ require (
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gogf/gf v1.16.9 // indirect
+	github.com/gogf/gf/v2 v2.5.4 // indirect
+	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

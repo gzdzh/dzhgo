@@ -93,6 +93,7 @@ func FillInitData(ctx g.Ctx, moduleName string, model IModel, reset ...bool) err
 	// 根目录锁文件模块名下存在指定的表名，证明该模块已经初始化了，跳过二次初始化
 	rootPath := gfile.MainPkgPath()
 	lockFile := rootPath + "/lock.json"
+	g.Log().Debug(ctx, "lockFile", lockFile)
 	if gfile.Exists(lockFile) {
 
 		// 存在文件，
