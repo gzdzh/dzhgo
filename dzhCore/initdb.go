@@ -1,14 +1,16 @@
 package dzhCore
 
 import (
-	"github.com/gogf/gf/container/gmap"
-	"github.com/gogf/gf/util/gconv"
+	"os"
+	"path/filepath"
+	"runtime"
+	"strings"
+
 	"github.com/gogf/gf/v2/container/garray"
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/gogf/gf/v2/os/gres"
 	"github.com/gzdzh/dzhgo/dzhCore/coredb"
 	"gorm.io/gorm"
@@ -65,98 +67,53 @@ func CreateTable(model IModel) error {
 	return nil
 }
 
-// FillInitData 数据库填充初始数据
-/**
-* reset含true，二次更新表，追加数据
- */
-func FillInitData(ctx g.Ctx, moduleName string, model IModel, reset ...bool) error {
-
-	// 是否重写已经初始化过的表
-	shouldReset := false
-	if len(reset) > 0 {
-		shouldReset = reset[0]
-	}
+// 数据库填充初始数据
+func FillInitData(ctx g.Ctx, moduleName string, model IModel) error {
 
 	mInit := g.DB("default").Model("base_sys_init")
-	n, err := mInit.Clone().Where("group", model.GroupName()).Where("table", model.TableName()).Count()
+	value, err := mInit.Clone().Where("group", model.GroupName()).Where("module", moduleName).Value("tables")
 	if err != nil {
 		g.Log().Error(ctx, "读取表 base_sys_init 失败 ", err.Error())
 		return err
 	}
-	if !shouldReset {
-		if n > 0 {
-			g.Log().Debug(ctx, "分组", model.GroupName(), "中的表", model.TableName(), "已经初始化过,跳过本次初始化.")
-			return nil
+
+	// 第一次
+	if value.IsEmpty() {
+
+		if err = updateData(ctx, mInit, moduleName, model); err == nil {
+			_, err = mInit.Insert(g.Map{"group": model.GroupName(), "module": moduleName, "tables": model.TableName()})
+			if err != nil {
+				g.Log().Error(ctx, err.Error())
+				return err
+			}
+			g.Log().Debug(ctx, "分组", model.GroupName(), "中的表", model.TableName(), "第一次写入")
+
 		}
+		return nil
 	}
 
-	// 根目录锁文件模块名下存在指定的表名，证明该模块已经初始化了，跳过二次初始化
-	rootPath := gfile.MainPkgPath()
-	lockFile := rootPath + "/lock.json"
-	g.Log().Debug(ctx, "lockFile", lockFile)
-	if gfile.Exists(lockFile) {
+	tableArr := strings.Split(value.String(), ",")
+	tableGarr := garray.NewStrArrayFrom(tableArr)
+	if tableGarr.Contains(model.TableName()) {
+		g.Log().Debug(ctx, "分组", model.GroupName(), "中的表", model.TableName(), "已经初始化过,跳过本次初始化.")
+		return nil
+	}
 
-		// 存在文件，
-		fileInfo := gfile.GetContents(lockFile)
+	if err = updateData(ctx, mInit, moduleName, model); err == nil {
 
-		if fileInfo == "" {
+		tableGarr.Append(model.TableName())
+		str := strings.Join(tableGarr.Slice(), ",")
+		mInit.Where("group", model.GroupName()).Where("module", moduleName).Data(g.Map{"tables": str}).Update()
+		g.Log().Debug(ctx, "分组", model.GroupName(), "中的表", model.TableName(), "更新写入")
 
-			if err = updateData(ctx, mInit, moduleName, model, shouldReset); err == nil {
-				insertMap := g.MapStrAny{
-					moduleName: g.Slice{model.TableName()},
-				}
-				gfile.PutContents(lockFile, gjson.MustEncodeString(insertMap))
-				g.Log().Debug(ctx, "分组", model.GroupName(), "中的表", model.TableName(), "第一次lock.json写入")
-
-			}
-
-		} else {
-
-			jsonObj, _ := gjson.LoadContent(fileInfo)
-
-			fileInfoMap := gmap.NewStrAnyMapFrom(jsonObj.Map())
-			arr := fileInfoMap.Get(moduleName)
-
-			fileInfoArr := garray.NewStrArrayFrom(gconv.SliceStr(arr))
-
-			// 找是否更新过指定模块表
-			if fileInfoArr.Contains(model.TableName()) {
-
-				g.Log().Debug(ctx, "分组", model.GroupName(), "中的表", model.TableName(), "存在lock,跳过本次初始化.")
-				return nil
-
-			} else {
-
-				if err = updateData(ctx, mInit, moduleName, model, shouldReset); err == nil {
-					fileInfoMap.Remove(moduleName)
-					fileInfoArr.Append(model.TableName())
-					fileInfoMap.Set(moduleName, fileInfoArr)
-					gfile.PutContents(lockFile, fileInfoMap.String())
-
-					g.Log().Debug(ctx, "分组", model.GroupName(), "中的表", model.TableName(), "lock.json更新")
-				}
-
-			}
-
-		}
-
-	} else {
-
-		if err = updateData(ctx, mInit, moduleName, model, shouldReset); err == nil {
-			insertMap := g.MapStrAny{
-				moduleName: g.Slice{model.TableName()},
-			}
-			gfile.PutContents(lockFile, gjson.MustEncodeString(insertMap))
-			g.Log().Debug(ctx, "分组", model.GroupName(), "中的表", model.TableName(), "第一次lock.json写入")
-
-		}
 	}
 
 	g.Log().Info(ctx, "分组", model.GroupName(), "中的表", model.TableName(), "初始化完成.")
 	return nil
 }
 
-func updateData(ctx g.Ctx, mInit *gdb.Model, moduleName string, model IModel, shouldReset bool) error {
+// 更新文件
+func updateData(ctx g.Ctx, mInit *gdb.Model, moduleName string, model IModel) error {
 
 	m := g.DB(model.GroupName()).Model(model.TableName())
 	path := "modules/" + moduleName + "/resource/initjson/" + model.TableName() + ".json"
@@ -164,7 +121,7 @@ func updateData(ctx g.Ctx, mInit *gdb.Model, moduleName string, model IModel, sh
 
 	g.Log().Debugf(ctx, "model.TableName(): %v,path:%v", model.TableName(), path)
 
-	if jsonData.Var().Clone().IsEmpty() && shouldReset {
+	if jsonData.Var().Clone().IsEmpty() {
 		g.Log().Debug(ctx, "分组", model.GroupName(), "中的表", model.TableName(), "无可用的初始化数据,跳过本次初始化. jsonData:", jsonData)
 		return gerror.New("无可用的初始化数据,跳过本次初始化")
 	}
@@ -173,13 +130,36 @@ func updateData(ctx g.Ctx, mInit *gdb.Model, moduleName string, model IModel, sh
 		g.Log().Error(ctx, err.Error())
 		return err
 	}
-	if !shouldReset {
-		_, err = mInit.Insert(g.Map{"group": model.GroupName(), "table": model.TableName()})
-		if err != nil {
-			g.Log().Error(ctx, err.Error())
-			return err
-		}
-	}
 
 	return nil
+}
+
+// 当前文件运行路径
+func GetRunPath(ctx g.Ctx) (string, error) {
+
+	// 获取当前文件的路径
+	_, filename, _, ok := runtime.Caller(0)
+	if !ok {
+		err := gerror.New("Failed to GetRunPath")
+		return "", err
+	}
+
+	// 获取项目的根目录路径
+	rootPath := filepath.Dir(filepath.Dir(filename))
+
+	return rootPath, nil
+}
+
+// 获取当前项目根目录路径
+func GetRootPath(ctx g.Ctx) string {
+
+	wd, _ := os.Getwd()
+
+	return wd
+
+	// filePath, _ := exec.LookPath(os.Args[0])
+	// absFilePath, _ := filepath.Abs(filePath)
+	// rootDir := path.Dir(absFilePath)
+
+	// return rootDir
 }

@@ -3,16 +3,21 @@ module github.com/gzdzh/dzhgo
 go 1.20
 
 require (
+	github.com/go-pay/gopay v1.5.96
+	github.com/gogf/gf v1.16.9
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.4
 	github.com/gogf/gf/v2 v2.5.4
-	github.com/gzdzh/dzhgo/contrib/drivers/mysql v0.0.8
-	github.com/gzdzh/dzhgo/contrib/files/local v0.0.8
-	github.com/gzdzh/dzhgo/contrib/files/oss v0.0.8
-	github.com/gzdzh/dzhgo/dzhCore v0.0.8
-	github.com/gzdzh/dzhgo/modules/base v0.0.8
-	github.com/gzdzh/dzhgo/modules/dict v0.0.8
-	github.com/gzdzh/dzhgo/modules/space v0.0.8
-	github.com/gzdzh/dzhgo/modules/task v0.0.8
+	github.com/gzdzh/dzhgo/contrib/drivers/mysql v0.0.9
+	github.com/gzdzh/dzhgo/contrib/files/local v0.0.9
+	github.com/gzdzh/dzhgo/contrib/files/oss v0.0.9
+	github.com/gzdzh/dzhgo/dzhCore v0.0.9
+	github.com/gzdzh/dzhgo/modules/base v0.0.9
+	github.com/gzdzh/dzhgo/modules/dict v0.0.9
+	github.com/gzdzh/dzhgo/modules/dzhCms v0.0.9
+	github.com/gzdzh/dzhgo/modules/dzhCommon v0.0.9
+	github.com/gzdzh/dzhgo/modules/dzhMember v0.0.9
+	github.com/gzdzh/dzhgo/modules/space v0.0.9
+	github.com/gzdzh/dzhgo/modules/task v0.0.9
 )
 
 require (
@@ -27,9 +32,9 @@ require (
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
-	github.com/gogf/gf v1.16.9 // indirect
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.4 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
+	github.com/gomodule/redigo v1.8.5 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
@@ -51,10 +56,17 @@ require (
 	golang.org/x/sys v0.12.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
+	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/mysql v1.5.1 // indirect
 	gorm.io/gorm v1.25.4 // indirect
 )
 
- 
+replace (
+	github.com/gzdzh/dzhgo/modules/dzhCms v0.0.9 => ./modules/dzhCms
+	github.com/gzdzh/dzhgo/modules/dzhCommon v0.0.9 => ./modules/dzhCommon
+	github.com/gzdzh/dzhgo/modules/dzhMember v0.0.9 => ./modules/dzhMember
+
+)

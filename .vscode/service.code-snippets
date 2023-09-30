@@ -17,7 +17,7 @@
   // }
   "model": {
     "scope": "go",
-    "prefix": "core-service",
+    "prefix": "dzhCore-service",
     "description": "创建service",
     "body": [
       "package service",

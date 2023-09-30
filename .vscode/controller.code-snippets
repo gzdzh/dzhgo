@@ -17,7 +17,7 @@
   // }
   "model": {
     "scope": "go",
-    "prefix": "core-controller",
+    "prefix": "dzhCore-controller",
     "description": "创建controller",
     "body": [
       "package admin",

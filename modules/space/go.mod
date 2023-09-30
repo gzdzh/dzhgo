@@ -2,7 +2,7 @@ module github.com/gzdzh/dzhgo/modules/space
 
 go 1.20
 
-require github.com/gzdzh/dzhgo/dzhCore v0.0.8
+require github.com/gzdzh/dzhgo/dzhCore v0.0.9
 
 require (
 	github.com/BurntSushi/toml v1.2.0 // indirect

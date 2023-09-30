@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "createTime": "2022-07-06 14:18:41.879000",
+    "updateTime": "2022-07-06 14:18:41.879000",
+    "deleted_at": null,
+    "sitename": null,
+    "notic": null,
+    "image": null,
+    "contact": null,
+    "mobile": null,
+    "contactList": null,
+    "gpt4": 0,
+    "baiduTranApiKey": null,
+    "baiduTranSecretKey": null,
+    "guild_id": null,
+    "channel_id": null,
+    "bot_token": null,
+    "cdn_proxy_url": null,
+    "discordToken": null,
+    "phrase": null,
+    "appid": null,
+    "mchId": null,
+    "cAPIv3Key": null,
+    "cSerialNo": null,
+    "cNotifyUrl": null,
+    "spMchid": null,
+    "spAppid": null,
+    "subMchId": null,
+    "aPIv3Key": null,
+    "serialNo": null,
+    "notifyUrl": null,
+    "payType": 1
+  }
+ 
+]

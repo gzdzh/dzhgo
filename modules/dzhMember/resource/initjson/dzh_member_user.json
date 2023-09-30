@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "createTime": "28/9/2023 10:31:19",
+    "updateTime": "28/9/2023 10:31:19",
+    "deleted_at": null,
+    "avatarUrl": null,
+    "username": "liliewin",
+    "password": "e10adc3949ba59abbe56e057f20f883e",
+    "passwordV": 1,
+    "nickName": null,
+    "levelName": null,
+    "sex": 0,
+    "qq": null,
+    "wx": null,
+    "wxImg": null,
+    "email": null,
+    "role": null,
+    "remark": null,
+    "openid": null,
+    "unionid": null,
+    "session_key": null,
+    "status": 1,
+    "mobile": null
+  }
+
+]
