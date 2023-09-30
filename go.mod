@@ -18,6 +18,7 @@ require (
 	github.com/gzdzh/dzhgo/modules/dzhMember v0.0.9
 	github.com/gzdzh/dzhgo/modules/space v0.0.9
 	github.com/gzdzh/dzhgo/modules/task v0.0.9
+
 )
 
 require (
@@ -65,8 +66,16 @@ require (
 )
 
 replace (
+	github.com/gzdzh/dzhgo/contrib/drivers/mysql v0.0.9 => ./contrib/drivers/mysql
+	github.com/gzdzh/dzhgo/contrib/files/local v0.0.9 => ./contrib/files/local
+	github.com/gzdzh/dzhgo/contrib/files/oss v0.0.9 => ./contrib/files/oss
+	github.com/gzdzh/dzhgo/dzhCore v0.0.9 => ./dzhCore
+	github.com/gzdzh/dzhgo/modules/base v0.0.9 => ./modules/base
+	github.com/gzdzh/dzhgo/modules/dict v0.0.9 => ./modules/dict
 	github.com/gzdzh/dzhgo/modules/dzhCms v0.0.9 => ./modules/dzhCms
 	github.com/gzdzh/dzhgo/modules/dzhCommon v0.0.9 => ./modules/dzhCommon
 	github.com/gzdzh/dzhgo/modules/dzhMember v0.0.9 => ./modules/dzhMember
+	github.com/gzdzh/dzhgo/modules/space v0.0.9 => ./modules/space
+	github.com/gzdzh/dzhgo/modules/task v0.0.9 => ./modules/task
 
 )

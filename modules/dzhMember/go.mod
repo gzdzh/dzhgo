@@ -5,11 +5,7 @@ go 1.20
 require (
 	github.com/gogf/gf/v2 v2.5.4
 	github.com/golang-jwt/jwt/v4 v4.5.0
-	github.com/gzdzh/dzhgo v0.0.8
 	github.com/gzdzh/dzhgo/dzhCore v0.0.9
-	github.com/gzdzh/dzhgo/modules/base v0.0.8
-	github.com/gzdzh/dzhgo/modules/dzhCommon v0.0.8
-
 )
 
 require (
