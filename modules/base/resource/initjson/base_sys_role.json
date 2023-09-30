@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "createTime": "2021-02-24 21:18:39.682358",
+    "updateTime": "2021-02-24 21:18:39.682358",
+    "userId": "1",
+    "name": "超管",
+    "label": "admin",
+    "remark": "最高权限的角色",
+    "relevance": 1
+  },
+  {
+    "id": 2,
+    "createTime": "2021-02-26 14:15:38.000000",
+    "updateTime": "2021-02-26 14:15:38.000000",
+    "userId": "1",
+    "name": "系统管理员",
+    "label": "admin-sys",
+    "remark": null,
+    "relevance": 1
+  }
+  
+]

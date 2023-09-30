@@ -7,8 +7,6 @@ import (
 
 	_ "github.com/gzdzh/dzhgo/contrib/drivers/mysql"
 
-	_ "github.com/gzdzh/dzhgo/modules"
-
 	"github.com/gogf/gf/v2/os/gctx"
 
 	"github.com/gzdzh/dzhgo/internal/cmd"
@@ -16,6 +14,8 @@ import (
 	_ "github.com/gzdzh/dzhgo/contrib/files/oss"
 
 	_ "github.com/gzdzh/dzhgo/contrib/files/local"
+
+	_ "github.com/gzdzh/dzhgo/modules"
 )
 
 func main() {
